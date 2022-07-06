@@ -1,0 +1,8 @@
+chains = [
+    "ethereum",
+    "solana",
+    "avalance",
+    "binance-smart-chain",
+    "near",
+    "bitcoin"
+]
