@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Developers | TCV Blockchain Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">TCV Blockchain Dashboard</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Developers</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    <br />
+    <div class="container">
+        <h1>Developer Activity</h1>
+        <p>Keeping track of the health of the developer ecosystems for each layer 1 blockchain.</p>
+        {% for chain in chains %}
+            <div class="card">
+                <div class="card-header">
+                    <h4>{{ chain['id']|capitalize }}</h4>
+                </div>
+                <div class="card-body">
+                    <p><b>Number of Total Commits:</b> {{chain['commits']|int }}</p>
+                    <p><b>Number of Total Stars:</b> {{chain['stars']|int }}</p>
+                    <p><b>Number of Total Contributors:</b> {{chain['contributors']|int }}</p>
+                    <p><b>Number of Total Forks:</b> {{chain['forks']|int }}</p>
+                </div>
+            </div>
+            <br />
+            <!-- (id text, commits real, stars real, contributors real, forks real) -->
+        {% endfor %}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+  </body>
+</html>
