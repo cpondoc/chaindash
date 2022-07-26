@@ -62,9 +62,21 @@
         <div class="col-sm">
           <h3>Total Value Locked</h3>
           <p>Represents the health of the DeFi ecosystem on each chain.</p>
-         <div>
-          <canvas id="tvlChart" width="200" height="200"></canvas>
-         </div>
+          <div>
+            <canvas id="tvlChart" width="200" height="200"></canvas>
+          </div>
+          <br />
+          <h3>Daily Number of Transactions</h3>
+          <p>Represents total user activity on the network</p>
+          <div>
+            <canvas id="txChart" width="200" height="200"></canvas>
+          </div>
+          <br />
+          <h3>Daily Number of Active Addresses</h3>
+          <p>Another representation of total user activity on the network</p>
+          <div>
+            <canvas id="accChart" width="200" height="200"></canvas>
+          </div>
         </div>
       </div>
       
@@ -72,19 +84,55 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-      // Getting data from Jinja
+      // Getting TVL Data from Jinja
       var tvl_nums = {{ tvl_nums | safe }}
       var tvl_dates = {{ tvl_dates | safe }}
 
       // Setting up TVL Data
       const ctx = document.getElementById('tvlChart').getContext('2d');
-      const myChart = new Chart(ctx, {
+      const tvlChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: tvl_dates, 
             datasets: [{
                 label: 'Total Value Locked',
                 data: tvl_nums, 
+                borderWidth: 1
+            }]
+        }
+      });
+
+      // Getting Transaction data from Jinja
+      var tx_nums = {{ tx_nums | safe }}
+      var tx_dates = {{ tx_dates | safe }}
+
+      // Setting up Transactions Data
+      const other_ctx = document.getElementById('txChart').getContext('2d');
+      const txChart = new Chart(other_ctx, {
+        type: 'line',
+        data: {
+            labels: tx_dates, 
+            datasets: [{
+                label: 'Daily Transactions',
+                data: tx_nums, 
+                borderWidth: 1
+            }]
+        }
+      });
+
+      // Getting account data
+      var acc_nums = {{ acc_nums | safe }}
+      var acc_dates = {{ acc_dates | safe }}
+
+      // Setting up Transactions Data
+      const acc_ctx = document.getElementById('accChart').getContext('2d');
+      const accChart = new Chart(acc_ctx, {
+        type: 'line',
+        data: {
+            labels: acc_dates, 
+            datasets: [{
+                label: 'Daily Active Addresses',
+                data: acc_nums, 
                 borderWidth: 1
             }]
         }

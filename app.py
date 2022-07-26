@@ -3,6 +3,7 @@ Current front-end for TCV Blockchain Dashbaord
 '''
 from backend.tvl import get_chain_tvl
 from backend.transactions import get_daily_txs
+from backend.accounts import get_daily_accs
 from flask import Flask, render_template
 import sqlite3
 
@@ -44,7 +45,12 @@ def chain_devs(chain):
 
     # Transaction Data
     tx_date_data, tx_data = get_daily_txs("avalanche", "Date(UTC)", "Value")
+
+    # Account Data
+    acc_date_data, acc_data = get_daily_accs("avalanche", "Date(UTC)", "Unique Address Total Count")
+
     conn.close()
-    return render_template('chain.html', repositories=repos[:20], 
+    return render_template('chain.html', repositories=repos[:15], 
         chain=chain_data, tvl_nums=tvl_data, tvl_dates=date_data,
-        tx_nums=tx_data, tx_dates=tx_date_data)
+        tx_nums=tx_data, tx_dates=tx_date_data, acc_nums=acc_data,
+        acc_dates=acc_date_data)
