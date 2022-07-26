@@ -7,8 +7,8 @@ import requests
 from github import Github
 
 # CHANGE TO COLLECT DATA ON NEW CHAINS
-chains = ["near", "binance-smart-chain"]
-database_file = "data.db"
+chains = ["near"]
+database_file = "db/sample_data.db"
 
 '''
 Function to get all of chain data from Github
@@ -28,15 +28,17 @@ def get_chain_data(chain, con, cur):
     contribs = set()
 
     # Github token using config file
-    config = toml.load("../config.toml")
+    config = toml.load("config.toml")
     g = Github(config[chain])
-
+    counter = 0
     # Iterate through each repository
     for repo in eco_toml['repo']:
 
         # Try pulling data, and check if repo exists/is public
+        counter += 1
         repo_name = repo['url'].replace("https://github.com/", "")
         print("Parsing data for repository: " + repo_name)
+        print("Repository Number: " + str(counter))
         try:
             # Github token using config file
             repo_data = g.get_repo(repo_name)

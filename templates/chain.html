@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">TCV Blockchain Dashboard</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/solana">Solana</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/avalanche">Avalanche</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/binance-smart-chain">Binance Smart Chain</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  <br />
+    <div class="container">
+      <h1>{{ repositories[0]['chain']|capitalize }} Data</h1>
+      <br />
+      <div class="row">
+        <div class="col-sm">
+          <h3>Developer Data</h3>
+          <p>Important info on developers building on the chian.</p>
+          <div class="card">
+            <div class="card-body">
+              <p><b>Number of Total Commits:</b> {{chain[0]['commits']|int }}</p>
+              <p><b>Number of Total Stars:</b> {{chain[0]['stars']|int }}</p>
+              <p><b>Number of Total Contributors:</b> {{chain[0]['contributors']|int }}</p>
+              <p><b>Number of Total Forks:</b> {{chain[0]['forks']|int }}</p>
+            </div>
+          </div>
+          <br />
+          <h3>List of All Repositories</h3>
+          <p>All current repositories of projects built on {{ repositories[0]['chain']|capitalize }}.</p>
+          <ul class="list-group">
+            {% for repo in repositories %}
+              <li class="list-group-item">
+                <h5>{{ repo['id'] }}</h5>
+                <p>Commits: {{repo['commits']|int }}</p>
+                <p>Stars: {{repo['stars']|int }}</p>
+                <p>Contributors: {{repo['contributors']|int }}</p>
+                <p>Forks: {{repo['forks']|int }}</p>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="col-sm">
+          <h3>Total Value Locked</h3>
+          <p>Represents the health of the DeFi ecosystem on each chain.</p>
+         <div>
+          <canvas id="tvlChart" width="200" height="200"></canvas>
+         </div>
+        </div>
+      </div>
+      
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      // Getting data from Jinja
+      var tvl_nums = {{ tvl_nums | safe }}
+      var tvl_dates = {{ tvl_dates | safe }}
+
+      // Setting up TVL Data
+      const ctx = document.getElementById('tvlChart').getContext('2d');
+      const myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: tvl_dates, 
+            datasets: [{
+                label: 'Total Value Locked',
+                data: tvl_nums, 
+                borderWidth: 1
+            }]
+        }
+      });
+    </script>
+  </body>
+</html>
