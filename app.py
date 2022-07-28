@@ -1,8 +1,7 @@
 '''
-Current front-end for TCV Blockchain Dashbaord
+Main endpoint for the TCV Blockchain Dashboard.
 '''
 from collections import defaultdict
-#from backend.accounts import get_daily_accs
 from backend.data import *
 from flask import Flask, render_template, send_from_directory
 import os
