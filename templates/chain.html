@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ metadata[name]['name'] }} | TCV Blockchain Dashboard</title>
+    <title>{{ metadata['name'] }} | TCV Blockchain Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <style>
@@ -23,19 +23,19 @@
   <body>
     {% include 'includes/_navbar.html' %}
     <div class="container">
-      <h1>{{ metadata[name]['name'] }}</h1>
+      <h1>{{ metadata['name'] }}</h1>
       <h4>
-        <a class="chain-icon" href="{{ metadata[name]['website'] }}">
+        <a class="chain-icon" href="{{ metadata['website'] }}">
           <i class="bi bi-globe"></i>
         </a>
-        <a class="chain-icon" href="{{ metadata[name]['twitter'] }}">
+        <a class="chain-icon" href="{{ metadata['twitter'] }}">
           <i class="bi bi-twitter" href="/"></i>
         </a>
-        <a class="chain-icon" href="{{ metadata[name]['github'] }}">
+        <a class="chain-icon" href="{{ metadata['github'] }}">
           <i class="bi bi-github"></i>
         </a>
       </h4>
-      <p>{{ metadata[name]['description'] }}</p>
+      <p>{{ metadata['description'] }}</p>
       <h3>Developer Statistics</h3>
           <p>For more information on these terms, check out the following <a href="https://docs.github.com/en/get-started/quickstart/github-glossary">glossary</a>.</p>
           <div class="row">
@@ -74,7 +74,7 @@
           </div>
           <br />
           <h3>Project Repositories</h3>
-          <p>Open-source projects being built on the chain. For a table of all projects for {{ metadata[name]['name'] }}, see <a href="/blank">here</a>.</p>
+          <p>Open-source projects being built on the chain. For a table of all projects for {{ metadata['name'] }}, see <a href="/blank">here</a>.</p>
           <table class="table">
             <thead>
               <tr>

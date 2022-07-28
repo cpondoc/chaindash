@@ -1,6 +1,11 @@
 '''
-Grab developer data using Electric Capital Ecosystem Repository
+Collects data on all pertinent chain statistics, including:
+-Developer data from the Electric Capital Taxonomy
+-Total Value Locked (TVL) from DeFi Llama
+-Number of Daily Active Accounts from Explorer
+-Number of Daily Transactions from Explorer
 '''
+import pandas as pd
 import toml
 import sqlite3
 import requests
@@ -75,6 +80,43 @@ def get_chain_data(chain, con, cur):
     # Commit statistics to each ecosystem
     cur.execute("INSERT INTO chains VALUES ('" + chain + "', " + str(total_commits) + ", " + str(total_stars) + ", " + str(len(contribs)) + ", " + str(total_forks) + ")")
     con.commit()
+
+'''
+Function to get TVL data from existing CSV.
+'''
+def get_chain_tvl(chain_name):
+    # Special exception for BSC
+    if (chain_name == "Binance-smart-chain"):
+        chain_name = "BSC"
+
+    # Grab all data
+    data = pd.read_csv('db/chains.csv')
+
+    # Extract TVL data
+    all_data = data[chain_name].values.tolist()
+    final_data = [x for x in all_data if pd.isnull(x) == False]
+
+    # Extract Date data
+    dates = data['Date'].values.tolist()
+    date_data = dates[len(all_data) - len(final_data):]
+    return date_data, final_data
+
+'''
+Downloading daily transactions from block explorers.
+'''
+def get_daily_txs(chain_name, date_param, value_param, tx_src):
+    if (chain_name != "binance-smart-chain"):
+        response = requests.get(tx_src)
+        open("db/" + str(chain_name) + "/transaction_data.csv", "wb").write(response.content)
+    
+    # Grab all data
+    data = pd.read_csv("db/" + str(chain_name) + "/transaction_data.csv")
+
+    # Extract TVL and date data
+    final_data = data[value_param].values.tolist()
+    date_data = data[date_param].values.tolist()
+
+    return date_data, final_data
 
 '''
 Connects to database and runs program on each chain as specified

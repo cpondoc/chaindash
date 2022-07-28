@@ -4,6 +4,7 @@ description = "Avalanche is an open-source platform for launching decentralized 
 website = "https://www.avax.network/"
 twitter = "https://twitter.com/avalancheavax"
 github = "https://github.com/ava-labs"
+transaction-source = "https://snowtrace.io/chart/tx?output=csv"
     
 [binance-smart-chain]
 name = "Binance Smart Chain"
@@ -11,6 +12,7 @@ description = "BNB Smart Chain (BSC) (Previously Binance Smart Chain) - EVM comp
 website = "https://www.binance.com/en"
 twitter = "https://twitter.com/BNBChain"
 github = "https://github.com/bnb-chain/bsc"
+transaction-source = "https://bscscan.com/chart/tx?output=csv"
 
 [polygon]
 name = "Polygon"
@@ -18,3 +20,4 @@ description = "Polygon is a platform design to support infrastructure developmen
 website = "https://polygon.technology/"
 twitter = "https://twitter.com/0xPolygon"
 github = "https://github.com/maticnetwork/"
+transaction-source = "https://polygonscan.com/chart/tx?output=csv"
