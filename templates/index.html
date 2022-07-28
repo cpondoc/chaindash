@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Developers | TCV Blockchain Dashboard</title>
+    <title>Home | TCV Blockchain Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
   </head>
   <body>
@@ -16,7 +16,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/solana">Solana</a>
+              <a class="nav-link active" aria-current="page" href="/polygon">Polygon</a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/avalanche">Avalanche</a>
@@ -30,22 +30,24 @@
     </nav>
     <br />
     <div class="container">
-        <h1>Developer Activity</h1>
-        <p>Keeping track of the health of the developer ecosystems for each layer 1 blockchain.</p>
+        <h1>Blockchain Dashboard</h1>
+        <p>Track the health and activity of each major blockchain.</p>
         {% for chain in chains %}
-            <div class="card">
-                <div class="card-header">
-                    <h4>{{ chain['id']|capitalize }}</h4>
+            <div class="card mb-3" style="max-width: 540px;">
+              <div class="row g-0">
+                <div class="col-md-4">
+                  <img src="/static/{{chain}}.png" class="img-fluid" alt="{{chain}}">
                 </div>
-                <div class="card-body">
-                    <p><b>Number of Total Commits:</b> {{chain['commits']|int }}</p>
-                    <p><b>Number of Total Stars:</b> {{chain['stars']|int }}</p>
-                    <p><b>Number of Total Contributors:</b> {{chain['contributors']|int }}</p>
-                    <p><b>Number of Total Forks:</b> {{chain['forks']|int }}</p>
+                <div class="col-md-7">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ chain | capitalize }}</h5>
+                    <p class="card-text">Avalanche is an open, programmable smart contracts platform for decentralized applications.</p>
+                    <p class="card-text"><small class="text-muted">Check out data <a href="/{{chain}}">here</a>.</small></p>
+                  </div>
                 </div>
+              </div>
             </div>
             <br />
-            <!-- (id text, commits real, stars real, contributors real, forks real) -->
         {% endfor %}
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>

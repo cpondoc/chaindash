@@ -7,7 +7,7 @@ import requests
 from github import Github
 
 # CHANGE TO COLLECT DATA ON NEW CHAINS
-chains = ["near"]
+chains = ["polygon"]
 database_file = "db/sample_data.db"
 
 '''

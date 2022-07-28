@@ -4,12 +4,21 @@ Current front-end for TCV Blockchain Dashbaord
 from backend.tvl import get_chain_tvl
 from backend.transactions import get_daily_txs
 from backend.accounts import get_daily_accs
-from flask import Flask, render_template
+from flask import Flask, render_template, send_from_directory
+import os
 import sqlite3
 
 # Set up Flask app
-app = Flask(__name__)
+app = Flask(__name__, instance_relative_config=True)
 database = 'db/sample_data.db'
+
+'''
+Adding favicon
+'''
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 '''
 Make connection to SQL database
@@ -24,16 +33,15 @@ Starting endpoint (for right now, just point to developers)
 '''
 @app.route('/')
 def index():
-    conn = get_db_connection()
-    chain_data = conn.execute('SELECT * FROM chains').fetchall()
-    conn.close()
-    return render_template('index.html', chains=chain_data)
+    all_chains = ['avalanche', 'binance-smart-chain', 'polygon']
+    return render_template('index.html', chains=all_chains)
 
 '''
 Endpoint for visualizing data activity for each chain
 '''
 @app.route('/<chain>')
 def chain_devs(chain):
+    print(chain)
     conn = get_db_connection()
 
     # Developer Data
@@ -44,10 +52,10 @@ def chain_devs(chain):
     date_data, tvl_data = get_chain_tvl(chain.capitalize())
 
     # Transaction Data
-    tx_date_data, tx_data = get_daily_txs("avalanche", "Date(UTC)", "Value")
+    tx_date_data, tx_data = get_daily_txs(chain, "Date(UTC)", "Value")
 
     # Account Data
-    acc_date_data, acc_data = get_daily_accs("avalanche", "Date(UTC)", "Unique Address Total Count")
+    acc_date_data, acc_data = get_daily_accs(chain, "Date(UTC)", "Unique Address Total Count")
 
     conn.close()
     return render_template('chain.html', repositories=repos[:15], 
