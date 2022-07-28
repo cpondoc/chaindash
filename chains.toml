@@ -5,6 +5,7 @@ website = "https://www.avax.network/"
 twitter = "https://twitter.com/avalancheavax"
 github = "https://github.com/ava-labs"
 transaction-source = "https://snowtrace.io/chart/tx?output=csv"
+accounts-source = "https://snowtrace.io/chart/active-address?output=csv"
     
 [binance-smart-chain]
 name = "Binance Smart Chain"
@@ -13,6 +14,7 @@ website = "https://www.binance.com/en"
 twitter = "https://twitter.com/BNBChain"
 github = "https://github.com/bnb-chain/bsc"
 transaction-source = "https://bscscan.com/chart/tx?output=csv"
+accounts-source = "https://www.bscscan.com/chart/active-address?output=csv"
 
 [polygon]
 name = "Polygon"
@@ -21,3 +23,4 @@ website = "https://polygon.technology/"
 twitter = "https://twitter.com/0xPolygon"
 github = "https://github.com/maticnetwork/"
 transaction-source = "https://polygonscan.com/chart/tx?output=csv"
+accounts-source = "https://polygonscan.com/chart/active-address?output=csv"

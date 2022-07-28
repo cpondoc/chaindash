@@ -1,9 +1,9 @@
 '''
 Collects data on all pertinent chain statistics, including:
--Developer data from the Electric Capital Taxonomy
--Total Value Locked (TVL) from DeFi Llama
--Number of Daily Active Accounts from Explorer
--Number of Daily Transactions from Explorer
+- Developer data from the Electric Capital Taxonomy
+- Total Value Locked (TVL) from DeFi Llama
+- Number of Daily Active Accounts from Explorer
+- Number of Daily Transactions from Explorer
 '''
 import pandas as pd
 import toml
@@ -111,6 +111,23 @@ def get_daily_txs(chain_name, date_param, value_param, tx_src):
     
     # Grab all data
     data = pd.read_csv("db/" + str(chain_name) + "/transaction_data.csv")
+
+    # Extract TVL and date data
+    final_data = data[value_param].values.tolist()
+    date_data = data[date_param].values.tolist()
+
+    return date_data, final_data
+
+'''
+Get daily active address information.
+'''
+def get_daily_accs(chain_name, date_param, value_param, acc_src):
+    if (chain_name != "binance-smart-chain"):
+        response = requests.get(acc_src)
+        open("db/" + str(chain_name) + "/account_data.csv", "wb").write(response.content)
+    
+    # Grab all data
+    data = pd.read_csv("db/" + str(chain_name) + "/account_data.csv")
 
     # Extract TVL and date data
     final_data = data[value_param].values.tolist()

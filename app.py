@@ -2,7 +2,7 @@
 Current front-end for TCV Blockchain Dashbaord
 '''
 from collections import defaultdict
-from backend.accounts import get_daily_accs
+#from backend.accounts import get_daily_accs
 from backend.data import *
 from flask import Flask, render_template, send_from_directory
 import os
@@ -51,26 +51,21 @@ Endpoint for visualizing data activity for each chain
 '''
 @app.route('/<chain>')
 def chain_devs(chain):
-    conn = get_db_connection()
-
     # Read TOML file and grab data
     chain_data = toml.load("chains.toml")
     metadata = chain_data[chain]
 
-    # Developer Data
+    # Developer Data (from SQL)
+    conn = get_db_connection()
     repos = conn.execute("SELECT * FROM repositories WHERE chain = '" + str(chain) + "'").fetchall()
     chain_data = conn.execute("SELECT * FROM chains WHERE id ='" + str(chain) + "'").fetchall()
-
-    # TVL Data
-    date_data, tvl_data = get_chain_tvl(chain.capitalize())
-
-    # Transaction Data
-    tx_date_data, tx_data = get_daily_txs(chain, "Date(UTC)", "Value", metadata["transaction-source"])
-
-    # Account Data
-    acc_date_data, acc_data = get_daily_accs(chain, "Date(UTC)", "Unique Address Total Count")
-
     conn.close()
+
+    # TVL, Transaction, and Accounts data (from external sources)
+    date_data, tvl_data = get_chain_tvl(chain.capitalize())
+    tx_date_data, tx_data = get_daily_txs(chain, "Date(UTC)", "Value", metadata["transaction-source"])
+    acc_date_data, acc_data = get_daily_accs(chain, "Date(UTC)", "Unique Address Total Count", metadata["accounts-source"])
+
     return render_template('chain.html', name=chain, repositories=repos[:20],
         metadata=metadata,
         chain=chain_data, tvl_nums=tvl_data, tvl_dates=date_data,
