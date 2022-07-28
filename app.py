@@ -1,45 +1,21 @@
 '''
 Current front-end for TCV Blockchain Dashbaord
 '''
+from collections import defaultdict
 from backend.tvl import get_chain_tvl
 from backend.transactions import get_daily_txs
 from backend.accounts import get_daily_accs
 from flask import Flask, render_template, send_from_directory
 import os
 import sqlite3
+import toml
 
 # Set up Flask app
 app = Flask(__name__, instance_relative_config=True)
 database = 'db/sample_data.db'
 
-# Template -- have some data her (will move to 'chains.toml')
-all_chains = ['avalanche', 'binance-smart-chain', 'polygon']
-chain_meta = {
-    'avalanche': {
-        'name': "Avalanche",
-        'description': "Avalanche is an open-source platform for launching decentralized finance applications and enterprise blockchain deployments in one interoperable, scalable ecosystem. Developers who build on Avalanche can create applications and custom blockchain networks with complex rulesets or build on existing private or public subnets.",
-        'website': "https://www.avax.network/",
-        'twitter': "https://twitter.com/avalancheavax",
-        'github': "https://github.com/ava-labs"
-    },
-    'binance-smart-chain': {
-        'name': "Binance Smart Chain",
-        'description': "BNB Smart Chain (BSC) (Previously Binance Smart Chain) - EVM compatible, consensus layers, and with hubs to multi-chains.",
-        'website': "https://www.binance.com/en",
-        'twitter': "https://twitter.com/BNBChain",
-        'github': "https://github.com/bnb-chain/bsc"
-    },
-    'polygon': {
-        'name': "Polygon",
-        'description': "Polygon is a platform design to support infrastructure development and help Ethereum scale. Its core component is a modular, flexible framework (Polygon SDK) that allows developers to build and connect Layer-2 infrastructures like Plasma, Optimistic Rollups, zkRollups, and Validium and standalone sidechains like the project's flagship product, Matic POS (Proof-of-Stake).",
-        'website': "https://polygon.technology/",
-        'twitter': "https://twitter.com/0xPolygon",
-        'github': "https://github.com/maticnetwork/"
-    }
-}
-
 '''
-Adding favicon
+Path for Favicon (currently TCV Logo)
 '''
 @app.route('/favicon.ico')
 def favicon():
@@ -55,18 +31,27 @@ def get_db_connection():
     return conn
 
 '''
-Starting endpoint (for right now, just point to developers)
+Endpoint for Blockchain Tracker Dashboard
 '''
 @app.route('/')
 def index():
-    return render_template('index.html', chains=all_chains, descriptions=chain_meta)
+    # Find data for chains and descriptions
+    chains = []
+    descriptions = defaultdict()
+
+    # Read TOML file and grab data
+    chain_data = toml.load("chains.toml")
+    for chain in chain_data:
+        chains.append(chain)
+        descriptions[chain] = chain_data[chain]
+    
+    return render_template('index.html', chains=chains, descriptions=descriptions)
 
 '''
 Endpoint for visualizing data activity for each chain
 '''
 @app.route('/<chain>')
 def chain_devs(chain):
-    print(chain)
     conn = get_db_connection()
 
     # Developer Data

@@ -1,8 +1,20 @@
-chains = [
-    "ethereum",
-    "solana",
-    "avalanche",
-    "binance-smart-chain",
-    "near",
-    "bitcoin"
-]
+[avalanche]
+name = "Avalanche"
+description = "Avalanche is an open-source platform for launching decentralized finance applications and enterprise blockchain deployments in one interoperable, scalable ecosystem. Developers who build on Avalanche can create applications and custom blockchain networks with complex rulesets or build on existing private or public subnets."
+website = "https://www.avax.network/"
+twitter = "https://twitter.com/avalancheavax"
+github = "https://github.com/ava-labs"
+    
+[binance-smart-chain]
+name = "Binance Smart Chain"
+description = "BNB Smart Chain (BSC) (Previously Binance Smart Chain) - EVM compatible, consensus layers, and with hubs to multi-chains."
+website = "https://www.binance.com/en"
+twitter = "https://twitter.com/BNBChain"
+github = "https://github.com/bnb-chain/bsc"
+
+[polygon]
+name = "Polygon"
+description = "Polygon is a platform design to support infrastructure development and help Ethereum scale. Its core component is a modular, flexible framework (Polygon SDK) that allows developers to build and connect Layer-2 infrastructures like Plasma, Optimistic Rollups, zkRollups, and Validium and standalone sidechains like the project's flagship product, Matic POS (Proof-of-Stake)."
+website = "https://polygon.technology/"
+twitter = "https://twitter.com/0xPolygon"
+github = "https://github.com/maticnetwork/"
