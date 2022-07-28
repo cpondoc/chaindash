@@ -3,68 +3,124 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
+    <title>{{ metadata[name]['name'] }} | TCV Blockchain Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400;1,700&display=swap');
       body {
         font-family: 'Roboto', sans-serif;
+      }
+      .chain-icon, .chain-icon:hover, .repo-link {
+        color: black;
+        text-decoration: none;
+      }
+      .card-body {
+        text-align: center;
       }
     </style>
   </head>
   <body>
     {% include 'includes/_navbar.html' %}
     <div class="container">
-      <h1>{{ repositories[0]['chain']|capitalize }} Data</h1>
-      <br />
-      <div class="row">
-        <div class="col-sm">
-          <h3>Developer Data</h3>
-          <p>Important info on developers building on the chian.</p>
-          <div class="card">
-            <div class="card-body">
-              <p><b>Number of Total Commits:</b> {{chain[0]['commits']|int }}</p>
-              <p><b>Number of Total Stars:</b> {{chain[0]['stars']|int }}</p>
-              <p><b>Number of Total Contributors:</b> {{chain[0]['contributors']|int }}</p>
-              <p><b>Number of Total Forks:</b> {{chain[0]['forks']|int }}</p>
+      <h1>{{ metadata[name]['name'] }}</h1>
+      <h4>
+        <a class="chain-icon" href="{{ metadata[name]['website'] }}">
+          <i class="bi bi-globe"></i>
+        </a>
+        <a class="chain-icon" href="{{ metadata[name]['twitter'] }}">
+          <i class="bi bi-twitter" href="/"></i>
+        </a>
+        <a class="chain-icon" href="{{ metadata[name]['github'] }}">
+          <i class="bi bi-github"></i>
+        </a>
+      </h4>
+      <p>{{ metadata[name]['description'] }}</p>
+      <h3>Developer Statistics</h3>
+          <p>For more information on these terms, check out the following <a href="https://docs.github.com/en/get-started/quickstart/github-glossary">glossary</a>.</p>
+          <div class="row">
+            <div class="col-sm">
+              <div class="card">
+                <div class="card-body">
+                  <h3>{{chain[0]['commits']|int }}</h3>
+                  <p>Commits</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm">
+              <div class="card">
+                <div class="card-body">
+                  <h3>{{chain[0]['stars']|int }}</h3>
+                  <p>Stars</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm">
+              <div class="card">
+                <div class="card-body">
+                  <h3>{{chain[0]['contributors']|int }}</h3>
+                  <p>Contributors</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm">
+              <div class="card">
+                <div class="card-body">
+                  <h3>{{chain[0]['forks']|int }}</h3>
+                  <p>Forks</p>
+                </div>
+              </div>
             </div>
           </div>
           <br />
-          <h3>List of All Repositories</h3>
-          <p>All current repositories of projects built on {{ repositories[0]['chain']|capitalize }}.</p>
-          <ul class="list-group">
-            {% for repo in repositories %}
-              <li class="list-group-item">
-                <h5>{{ repo['id'] }}</h5>
-                <p>Commits: {{repo['commits']|int }}</p>
-                <p>Stars: {{repo['stars']|int }}</p>
-                <p>Contributors: {{repo['contributors']|int }}</p>
-                <p>Forks: {{repo['forks']|int }}</p>
-              </li>
+          <h3>Project Repositories</h3>
+          <p>Open-source projects being built on the chain. For a table of all projects for {{ metadata[name]['name'] }}, see <a href="/blank">here</a>.</p>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col"><i class="bi bi-github"></i> Name</th>
+                <th scope="col">Commits</th>
+                <th scope="col">Stars</th>
+                <th scope="col">Contributors</th>
+                <th scope="col">Forks</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for repo in repositories %}
+                <tr>
+                  <th scope="row"><a class="repo-link" href="https://github.com/{{ repo['id'] }}">{{ repo['id'] }}</a></th>
+                  <td>{{repo['commits']|int }}</td>
+                  <td>{{repo['stars']|int }}</td>
+                  <td>{{repo['contributors']|int }}</td>
+                  <td>{{repo['forks']|int }}</td>
+                </tr>
             {% endfor %}
-          </ul>
-        </div>
-        <div class="col-sm">
-          <h3>Total Value Locked</h3>
-          <p>Represents the health of the DeFi ecosystem on each chain.</p>
-          <div>
-            <canvas id="tvlChart" width="200" height="200"></canvas>
-          </div>
+            </tbody>
+          </table>
           <br />
-          <h3>Daily Number of Transactions</h3>
-          <p>Represents total user activity on the network</p>
-          <div>
-            <canvas id="txChart" width="200" height="200"></canvas>
-          </div>
+          <div class="row">
+            <div class="col-sm">
+              <h3>Total Value Locked</h3>
+              <p>Represents the health of the DeFi ecosystem on each chain.</p>
+              <div class="chart-container" style="position: relative; height:600px; width:600px">
+                <canvas id="tvlChart" width="100" height="100"></canvas>
+              </div>
+            </div>
+            <div class="col-sm">
+              <h3>Daily Number of Transactions</h3>
+              <p>Represents total user activity on the network</p>
+              <div class="chart-container" style="position: relative; height:600px; width:600px">
+                <canvas id="txChart" width="100" height="100"></canvas>
+              </div>
+            </div>
+          </div>          
           <br />
           <h3>Daily Number of Active Addresses</h3>
           <p>Another representation of total user activity on the network</p>
-          <div>
-            <canvas id="accChart" width="200" height="200"></canvas>
-          </div>
+          <div class="chart-container" style="position: relative; height:600px; width:600px">
+            <canvas id="accChart" width="100" height="100"></canvas>
         </div>
-      </div>
-      
+        <br />
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

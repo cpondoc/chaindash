@@ -13,25 +13,30 @@
       .col-md-7 {
         text-align: left !important;
       }
+      .chain-name {
+        color: black !important;
+        text-decoration: none;
+      }
+      .chain-img {
+        border-radius: 50%;
+        height: 20px;
+      }
     </style>
   </head>
   <body>
     {% include 'includes/_navbar.html' %}
     <div class="container">
-        <h1>Blockchain Dashboard</h1>
+        <h1>Blockchain Tracker</h1>
         <p>Track the health and activity of each major blockchain.</p>
         <ul class="list-group">
           {% for chain in chains %}
           <li class="list-group-item">
             <div class="row">
-              <div class="col-sm-2">
-                <img src="/static/{{chain}}.png" alt="{{chain}}" height="100px !important">
-              </div>
-              <div class="col-sm-10">
-                  <h5>{{ chain | capitalize }}</h5>
-                  <p>{{ descriptions[chain] }}</p>
-                  <p><small class="text-muted">Check out data <a href="/{{chain}}">here</a>.</small></p>
-              </div>
+              <h5>
+                <img src="/static/{{chain}}.png" class="chain-img" alt="{{chain}}">
+                <a class="chain-name" href="/{{chain}}"><b>{{ descriptions[chain]['name'] }}</b></a>
+              </h5>
+              <p>{{ descriptions[chain]['description'] }}</p>
             </div>
           </li>
           <br />
