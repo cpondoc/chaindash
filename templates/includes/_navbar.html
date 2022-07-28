@@ -1,0 +1,40 @@
+<style>
+    .navbar {
+        background-color: #071d49 !important;
+    }
+    .navbar-brand {
+        color: white !important;
+    }
+    .nav-link {
+        color: white !important;
+        font-size: 16px;
+    }
+</style>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <img src="/static/favicon.ico" alt="TCV Logo" height="40px">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Blockchains
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="/polygon">Polygon</a></li>
+                <li><a class="dropdown-item" href="/avalanche">Avalanche</a></li>
+                <li><a class="dropdown-item" href="/binance-smart-chain">Binance Smart Chain</a></li>
+            </ul>
+            </li>
+        </ul>
+        </div>
+    </div>
+</nav>
+<br />
